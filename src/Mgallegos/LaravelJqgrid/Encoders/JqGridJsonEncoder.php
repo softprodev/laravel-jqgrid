@@ -144,6 +144,14 @@ class JqGridJsonEncoder implements RequestedDataInterface {
 						$filter['op'] = 'not like';
 						$filter['data'] = '%' . $filter['data'] . '%';
 						break;
+					case 'nu': //is null
+            $filter['op'] = 'is null';
+            $filter['data'] = '';
+            break;
+      		case 'nn': //is not null
+            $filter['op'] = 'is not null';
+            $filter['data'] = '';
+           	break;
 				}
 			}
 		}
@@ -245,14 +253,14 @@ class JqGridJsonEncoder implements RequestedDataInterface {
 								{
 									if(isset($model['label']))
 									{
-										$row[$model['label']] = $row[$model['name']];
+										$row = array_add($row, $model['label'], $row[$model['name']]);
 										unset($row[$model['name']]);
 									}
 									else
 									{
 										$temp = $row[$model['name']];
 										unset($row[$model['name']]);
-										$row[$model['name']] = $temp;
+										$row = array_add($row, $model['name'], $temp);
 									}
 								}
 							}
